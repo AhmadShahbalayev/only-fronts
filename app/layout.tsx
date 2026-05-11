@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import Navbar from "@/components/navigation/navbar";
+import ThemeProvider from "@/context/Theme";
+import { cn } from "@/lib/utils";
+
 import "./globals.css";
 
 const inter = localFont({
@@ -16,7 +20,7 @@ const spaceGrotesk = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Only Fronts",
+  title: "OnlyFronts",
   description:
     "A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with developers from around the world. Explore topics in frontend development, algorithms, data structures, and more.",
   icons: {
@@ -30,8 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.className} ${spaceGrotesk.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", inter.variable)}>
+      <body className={`${inter.className} ${spaceGrotesk.variable} antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Navbar />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
